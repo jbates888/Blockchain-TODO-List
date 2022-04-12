@@ -14,4 +14,4 @@ node scripts/sample-script.js
 npx hardhat help
 ```
 
-TODO contract deployed to: 0xC076B345bDB286a895A19589D47cb7ed30AC66a9
+TODO contract deployed to: 0xd20464BC246a8c4Cd01C7D1fabB0066d2b8469c4

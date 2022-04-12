@@ -4,8 +4,8 @@ function List(props) {
 
     const listItems = items.map((item) =>
         <li>
-            <input value={item} type="checkbox" onClick= { () => props.deleteFunc()}/>
-            <span>{item}</span>
+             <span>{item}</span>
+            <button onClick= { () => props.deleteFunc()}>Done</button>
         </li>
     );
 

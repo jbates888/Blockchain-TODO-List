@@ -1,4 +1,4 @@
-import { BigNumber, Contract, providers, utils } from "ethers";
+import { Contract, providers, utils } from "ethers";
 import React, { useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
 import {
@@ -191,6 +191,7 @@ function App() {
           {walletConnected ? (
             <div>
               {renderInput()}
+              <p>{list}</p>
               <List list={list} deleteFunc={removeItemFromList}/>
             </div>
           ) : (
