@@ -104,7 +104,7 @@ export class Dapp extends React.Component {
               {this.state.balance > 0 && !this.state.txBeingSent && (
                 <div>
                    {this.renderInput()}
-                   <List list={this.state.list} finishFunc={this._finishItem}/>
+                   <List className="todo-list" list={this.state.list} finishFunc={this._finishItem}/>
                 </div>
               )}
             </div>
@@ -123,27 +123,37 @@ export class Dapp extends React.Component {
       );
     } else {
       return (
-        <div style={{ display: "flex-col" }}>
-          <button onClick={() => this._deleteList()}>
-            Delete List
-          </button>
-          <div>
-            <input
-              type="text"
-              placeholder="Item Title"
-              onChange={(e) => this.setState({ titleText: e.target.value.toString()})}
-            />
-            {true && 
+        <div className="input-div">
+          <div className="input-group mb-3">
+            {this.state.list.length === 0 && 
+                <input
+                  className="input-group-text"
+                  type="text"
+                  placeholder="Amount To Lock"
+                  onChange={(e) => this.setState({ amountText: e.target.value.toString()})}
+                />
+              }
+            </div>
+
+            <div className="input-group mb-3">
               <input
+                className="input-group-text"
                 type="text"
-                placeholder="Amount To Lock"
-                onChange={(e) => this.setState({ amountText: e.target.value.toString()})}
+                placeholder="Item Title"
+                onChange={(e) => this.setState({ titleText: e.target.value.toString()})}
               />
-            }
           </div>
-          <button onClick={() => this._addItem(this.state.titleText, this.state.amountText)}>
+
+          <button className="btn btn-primary" onClick={() => this._addItem(this.state.titleText, this.state.amountText)}>
             Add Item
           </button>
+
+          {this.state.list.length > 0 &&
+            <button className="btn btn-danger" onClick={() => this._deleteList()}>
+              Delete List
+            </button>
+          }
+
         </div>
       );
     }

@@ -19,21 +19,6 @@
   background-color: #151515 !important;
 }
 
-hr {
-  height: 5;
-  background-color: #662d91;
-}
-
-/* winner splash screen styles */
-
-.splash {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 80px;
-  left: 0px;
-}
-
 /* header styles */
 
 .header-div {
@@ -59,66 +44,16 @@ hr {
   margin-left: auto;
 }
 
-/* form style */
+/* input */
 
-.form-div {
-  border-style: solid;
-  border-color: #662d91;
-  border-radius: 1rem;
-  border-width: 3px;
-  padding: 20px;
+.input-div {
+  display: "flex-col";
 }
 
-.form-div,
-.form-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
+/* list */
 
-.form-control:focus {
-  border-style: none !important;
-}
-
-.form-div label {
-  margin-left: 5px;
-  font-size: 1.3em;
-}
-
-.form-div .flip {
-  margin: auto;
-  width: 20%;
-}
-
-.radio-toolbar {
-  margin: 10px;
-}
-
-.radio-toolbar input[type="radio"] {
-  opacity: 0;
-  position: fixed;
-  width: 0;
-}
-
-.radio-toolbar label {
-  display: inline-block;
-  background-color: ##662d91;
-  padding: 10px 20px;
-  font-family: sans-serif, Arial;
-  font-size: 16px;
-  border: 2px solid ##662d91;
-  border-radius: 4px;
-}
-
-.radio-toolbar label:hover {
-  background-color: #faf4d3;
-  cursor: pointer;
-}
-
-.radio-toolbar input[type="radio"]:checked + label {
-  background-color: #B58B00;
-  border-color: white;
+.todo-item {
+  margin: 15px;
 }
 
 /* alert messages */
