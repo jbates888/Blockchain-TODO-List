@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
 
 /* global styles */
 
@@ -7,7 +7,7 @@
   margin: 0px;
   background-color: #151515;
   color: white;
-  font-family: "Quicksand", sans-serif;
+  font-family: 'Maven Pro', sans-serif;
 }
 
 .btn-primary {
@@ -15,8 +15,8 @@
   border-style: none !important;
 }
 
-.btn-primar:hover {
-  background-color: #151515 !important;
+.btn-primary:hover {
+  background-color: #1f0029 !important;
 }
 
 /* header styles */
@@ -44,16 +44,85 @@
   margin-left: auto;
 }
 
+/* main area */
+
+.main-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40vw;
+  min-width: 500px;
+  padding: 25px;
+  background-color: rgb(38, 38, 38);
+  border-radius: .5em;
+}
+
 /* input */
 
 .input-div {
-  display: "flex-col";
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(38, 38, 38);
+}
+
+.input-amount-div {
+  background-color: rgb(38, 38, 38);
+}
+
+.btn-delete {
+  width: 65%;
 }
 
 /* list */
 
+.list {
+  list-style-type:none;
+  width: 100%;
+  background-color: rgb(38, 38, 38);
+}
+
 .todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
   margin: 15px;
+  padding: 10px;
+  border-radius: .5rem;
+  background-color: #662d91;
+}
+
+.finished-item {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  margin: 15px;
+  padding: 10px;
+  border-radius: .5rem;
+  background-color: #34164a;
+}
+
+.finished-item span {
+  text-decoration: line-through;
+  background-color: #34164a;
+}
+
+.todo-item span {
+  background-color: #662d91;
+}
+
+.btn-done {
+  margin-left: 15px;
 }
 
 /* alert messages */

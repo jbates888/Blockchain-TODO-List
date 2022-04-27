@@ -25,7 +25,7 @@ contract TodoList {
         todoList[msg.sender].push(Item({title: _itemTitle, done: false}));
     }
 
-    // mark an item as comleted, payout the user if they are done with all tasks
+    // mark an item as comleted
     function finishItem(uint256 _taskIndex) public {
         require(
             todoList[msg.sender][_taskIndex].done == false,
@@ -34,19 +34,21 @@ contract TodoList {
         todoList[msg.sender][_taskIndex].done = true;
     }
 
+    // return the list that belongs to the message sender
     function getList() public view returns (Item[] memory) {
         return todoList[msg.sender];
     }
 
-    // delete the users todo list
+    // delete the users todo list and pay them hteir locked up funds
     function deleteList() public {
         require(getNumTodo() == 0, "Must finish all items in your list");
         delete todoList[msg.sender];
-        amountLocked[msg.sender] = 0;
         (bool sent, ) = msg.sender.call{value: amountLocked[msg.sender]}("");
         require(sent, "Failed to send Ether");
+        amountLocked[msg.sender] = 0;
     }
 
+    // get the number of tasks that are not marked as finished
     function getNumTodo() public view returns (uint256 num) {
         uint256 count = 0;
         for (uint256 i = 0; i < todoList[msg.sender].length; i++) {

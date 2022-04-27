@@ -18,6 +18,7 @@ async function main() {
     await deployer.getAddress()
   );
 
+  // deploy the todoList contract
   const TodoList = await ethers.getContractFactory("TodoList");
   const todoList = await TodoList.deploy();
   await todoList.deployed();

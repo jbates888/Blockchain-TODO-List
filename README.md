@@ -5,7 +5,7 @@ have completed all of your tasks you can mark the list as complete and get your 
 
 URL:
 
-Here is the contract on Rinkeby Etherscan:
+Here is the contract on Rinkeby Etherscan: https://rinkeby.etherscan.io/address/0xa585fbe0d9c56cD9ceE6cA2C2520d96E97bb77a1#code
 
 # How to use :blue_book:
 
@@ -14,8 +14,9 @@ Here is the contract on Rinkeby Etherscan:
 3. Find a working faucet and add funds to your account
 4. Enter the first task and the amount of ETH to lock
 5. Add the rest of your tasks
-6. As you complte your taks mark them as done
-7. Once every task is complete you can press the finish button and get your funds
+6. As you complete your tasks, mark them as done
+7. Once every task is complete you can press the finish button and get your funds back
+8. To make a new list you must lock funds again
 
 # Technology used
 

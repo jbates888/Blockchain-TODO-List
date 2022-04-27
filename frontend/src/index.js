@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Dapp } from "./components/Dapp";
 import './index.css'
 import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 // This is the entry point, it renders the Dapp
 // react component. All of the logic is contained in it.

@@ -21,20 +21,24 @@ const RINKEBY_NETWORK_ID = '4';
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
 
+// the main component which holds the logic for the dapp
 export class Dapp extends React.Component {
+  
   constructor(props) {
     super(props);
-
     // this must be bound so the list component can call it
     this._finishItem = this._finishItem.bind(this)
-    
+    // the state for the current user
     this.initialState = {
       // The user's address and balance
       selectedAddress: undefined,
       balance: undefined,
+      // the list of tasks
       list: undefined,
-      titleText: undefined,
-      amountText: undefined,
+      // the text for the title input box
+      titleText: "",
+      // the amount of ETH in the input box
+      amountText: 0,
       // The ID about transactions being sent, and any possible error with them
       txBeingSent: undefined,
       transactionError: undefined,
@@ -44,6 +48,7 @@ export class Dapp extends React.Component {
     this.state = this.initialState;
   }
 
+  // this function is ran every time by React
   render() {
     // Ethereum wallets inject the window.ethereum object. If it hasn't been
     // injected, we instruct the user to install MetaMask.
@@ -74,7 +79,7 @@ export class Dapp extends React.Component {
     return (
       <div>
         <Header address={this.state.selectedAddress} balance={this.state.balance.toString()}/>
-        <div className="container p-4">
+        <div className="container p-4 main-div">
           <div className="row">
             <div className="col-12">
 
@@ -94,15 +99,15 @@ export class Dapp extends React.Component {
 
           <div className="row">
             <div className="col-12">
-              {/*If the user has no tokens, we don't show the Transfer form */}
+              {/*If the user has no tokens, we show them how to get some */}
               {this.state.balance === "0" && (
                 <NoTokensMessage />
               )}
               {/*If a transaction is peneding */}
               {this.state.txBeingSent && <Loading />}
-              {/* if the user has ETH and no transaction is currenlty being sent, show the game form */}
+              {/* if the user has ETH and no transaction is currenlty being sent, show the form and the list */}
               {this.state.balance > 0 && !this.state.txBeingSent && (
-                <div>
+                <div className="main-card">
                    {this.renderInput()}
                    <List className="todo-list" list={this.state.list} finishFunc={this._finishItem}/>
                 </div>
@@ -114,6 +119,7 @@ export class Dapp extends React.Component {
     );
   }
 
+  // return the input boxes for the user to lock funds and add items
   renderInput() {
     if(this.state.txBeingSent) {
       return (
@@ -124,33 +130,45 @@ export class Dapp extends React.Component {
     } else {
       return (
         <div className="input-div">
-          <div className="input-group mb-3">
+          <div className="input-group input-amount-div mb-3">
+            {/* if the user has no items in their list show the input to lock funds */}
             {this.state.list.length === 0 && 
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Amount To Lock</span>
+                </div>
                 <input
-                  className="input-group-text"
-                  type="text"
-                  placeholder="Amount To Lock"
-                  onChange={(e) => this.setState({ amountText: e.target.value.toString()})}
+                  className="input-group-text input-amount"
+                  type="number"
+                  step=".1"
+                  value={this.state.amountText}
+                  onChange={(e) => this.setState({ amountText: e.target.value})}
                 />
-              }
-            </div>
-
-            <div className="input-group mb-3">
-              <input
-                className="input-group-text"
-                type="text"
-                placeholder="Item Title"
-                onChange={(e) => this.setState({ titleText: e.target.value.toString()})}
-              />
+            </div>  
+            }
           </div>
 
-          <button className="btn btn-primary" onClick={() => this._addItem(this.state.titleText, this.state.amountText)}>
-            Add Item
-          </button>
-
+          <div className="input-group mb-3">
+            <input 
+              type="text" 
+              className="form-control"
+              placeholder="Item Title" 
+              aria-label="Item Title" 
+              aria-describedby="basic-addon2" 
+              value={this.state.titleText.toString()} 
+              onChange={(e) => this.setState({ titleText: e.target.value.toString() })}
+            />
+            <div className="input-group-append">
+              {/* if the user has no items in their list, disable the add button until they enter funds to lock */}
+              <button className="btn btn-primary" disabled={this.state.list.length === 0 && !parseFloat(this.state.amountText) > 0} onClick={() => this._addItem(this.state.titleText, this.state.amountText.toString())}>
+                Add Item
+              </button>
+            </div>
+          </div>
+          {/* if the user does have list items, show the button to finish the list */}
           {this.state.list.length > 0 &&
-            <button className="btn btn-danger" onClick={() => this._deleteList()}>
-              Delete List
+            <button className="btn btn-outline-danger btn-delete" onClick={() => this._deleteList()}>
+              Done with List!
             </button>
           }
 
@@ -231,7 +249,7 @@ export class Dapp extends React.Component {
   }
 
   async _updateList() {
-    // get the balance of the users wallet
+    // get the list for the user's address in the contract
     let list = await this._todoList.getList()
 
     this.setState({ list });
@@ -246,7 +264,7 @@ export class Dapp extends React.Component {
   }
 
   async _finishItem(index) {
-    console.log(index);
+    // mark an item as complete in the contract
     try {
       // If a transaction fails, we save that error in the component's state.
       // We only save one such error, so before sending a second transaction, we
@@ -265,7 +283,7 @@ export class Dapp extends React.Component {
       if (receipt.status === 0) {
         throw new Error("Transaction failed");
       }
-      //this._updateList();
+      this._updateList();
     } catch (error) {
       // We check the error code to see if this error was produced because the
       // user rejected a tx. If that's the case, we do nothing.
@@ -284,6 +302,7 @@ export class Dapp extends React.Component {
   }
 
   async _addItem(title, amount = "0") {
+    // add a task to the users list in the contract
     try {
       // If a transaction fails, we save that error in the component's state.
       // We only save one such error, so before sending a second transaction, we
@@ -323,7 +342,13 @@ export class Dapp extends React.Component {
   }
 
   async _deleteList() {
+    // when the user marks the list as complete send them their locked funds
     try {
+      // alert the user if they did not mark every item complete before deleting the list
+      if(!this._checkAllDone()) {
+        window.alert("You must complete the enitre list to delete it.");
+        return;
+      }
       // If a transaction fails, we save that error in the component's state.
       // We only save one such error, so before sending a second transaction, we
       // clear it.
@@ -393,6 +418,18 @@ export class Dapp extends React.Component {
     });
 
     return false;
+  }
+
+  // this method verifies all the tasks have been marked as complete
+  _checkAllDone() {
+    var result = true;
+    this.state.list.forEach(function (item) {
+      if(item[1] === false) {
+        result = false;
+      }
+    });
+
+    return result;
   }
 
 }
