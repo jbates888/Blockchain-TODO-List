@@ -80,6 +80,10 @@
   background-color: rgb(38, 38, 38);
 }
 
+.input-amount {
+  width: 42%;
+}
+
 .btn-delete {
   width: 65%;
 }

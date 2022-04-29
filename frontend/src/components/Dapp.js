@@ -133,13 +133,14 @@ export class Dapp extends React.Component {
           <div className="input-group input-amount-div mb-3">
             {/* if the user has no items in their list show the input to lock funds */}
             {this.state.list.length === 0 && 
-              <div class="input-group mb-1">
+              <div class="input-group input-amount-div">
                 <div class="input-group-prepend">
                   <span class="input-group-text">Amount To Lock</span>
                 </div>
                 <input
                   className="input-group-text input-amount"
                   type="number"
+                  min="0"
                   step=".1"
                   value={this.state.amountText}
                   onChange={(e) => this.setState({ amountText: e.target.value})}
@@ -148,26 +149,30 @@ export class Dapp extends React.Component {
             }
           </div>
 
-          <div className="input-group mb-3">
-            <input 
-              type="text" 
-              className="form-control"
-              placeholder="Item Title" 
-              aria-label="Item Title" 
-              aria-describedby="basic-addon2" 
-              value={this.state.titleText.toString()} 
-              onChange={(e) => this.setState({ titleText: e.target.value.toString() })}
-            />
-            <div className="input-group-append">
-              {/* if the user has no items in their list, disable the add button until they enter funds to lock */}
-              <button className="btn btn-primary" disabled={this.state.list.length === 0 && !parseFloat(this.state.amountText) > 0} onClick={() => this._addItem(this.state.titleText, this.state.amountText.toString())}>
-                Add Item
-              </button>
-            </div>
+          <div className="input-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Item Title</span>
+              </div>
+              <input 
+                type="text" 
+                className="form-control" 
+                aria-label="Item Title" 
+                aria-describedby="basic-addon2" 
+                value={this.state.titleText.toString()} 
+                onChange={(e) => this.setState({ titleText: e.target.value.toString() })}
+              />
+              <div className="input-group-append">
+                {/* if the user has no items in their list, disable the add button until they enter funds to lock and the title text */}
+                <button className="btn btn-primary" disabled={(this.state.list.length === 0 && this.state.amountText <= 0) || this.state.titleText === ""} onClick={() => this._addItem(this.state.titleText, this.state.amountText.toString())}>
+                  Add Item
+                </button>
+              </div>
+            </div>  
           </div>
           {/* if the user does have list items, show the button to finish the list */}
           {this.state.list.length > 0 &&
-            <button className="btn btn-outline-danger btn-delete" onClick={() => this._deleteList()}>
+            <button className="btn btn-outline-danger btn-delete" disabled={!this._checkAllDone()} onClick={() => this._deleteList()}>
               Done with List!
             </button>
           }
