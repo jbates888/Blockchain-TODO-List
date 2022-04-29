@@ -167,7 +167,7 @@ export class Dapp extends React.Component {
           </div>
           {/* if the user does have list items, show the button to finish the list */}
           {this.state.list.length > 0 &&
-            <button className="btn btn-outline-danger btn-delete" disabled={this._checkAllDone()} onClick={() => this._deleteList()}>
+            <button className="btn btn-outline-danger btn-delete" onClick={() => this._deleteList()}>
               Done with List!
             </button>
           }
@@ -324,7 +324,8 @@ export class Dapp extends React.Component {
         throw new Error("Transaction failed");
       }
       this._updateList();
-      this.setState({ amountText: 0, titleText: "" });
+      this.setState({ amountText: 0 });
+      this.setState({ titleText: "" });
     } catch (error) {
       // We check the error code to see if this error was produced because the
       // user rejected a tx. If that's the case, we do nothing.
