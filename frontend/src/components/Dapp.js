@@ -167,7 +167,7 @@ export class Dapp extends React.Component {
           </div>
           {/* if the user does have list items, show the button to finish the list */}
           {this.state.list.length > 0 &&
-            <button className="btn btn-outline-danger btn-delete" onClick={() => this._deleteList()}>
+            <button className="btn btn-outline-danger btn-delete" disabled={this._checkAllDone()} onClick={() => this._deleteList()}>
               Done with List!
             </button>
           }
