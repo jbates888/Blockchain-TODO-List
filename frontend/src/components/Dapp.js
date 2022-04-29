@@ -324,6 +324,7 @@ export class Dapp extends React.Component {
         throw new Error("Transaction failed");
       }
       this._updateList();
+      this.setState({ amountText: 0, titleText: "" });
     } catch (error) {
       // We check the error code to see if this error was produced because the
       // user rejected a tx. If that's the case, we do nothing.

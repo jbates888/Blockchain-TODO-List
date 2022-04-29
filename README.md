@@ -3,7 +3,7 @@
 This TODO list is made to help you get stuff done. When adding the first item to your list you must lock up ETH. Only when you
 have completed all of your tasks you can mark the list as complete and get your ETH back.
 
-URL:
+URL: https://blockchain-todo-list.vercel.app/
 
 Here is the contract on Rinkeby Etherscan: https://rinkeby.etherscan.io/address/0xa585fbe0d9c56cD9ceE6cA2C2520d96E97bb77a1#code
 
